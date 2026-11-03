@@ -1,0 +1,12 @@
+Model,CV RMSE mean [mg/L],CV RMSE SD [mg/L],CV R2 mean,Kind,Parameters
+Polynomial degree 2,0.10886501149228181,0.008659605567582124,0.8963845114886366,polynomial,{'degree': 2}
+kNN k=5 distance,0.1674500650857129,0.0481282537233295,0.7613768028156835,knn,"{'neighbors': 5, 'weights': 'distance'}"
+kNN k=5 uniform,0.1674537903622945,0.04812741482567271,0.761366318065954,knn,"{'neighbors': 5, 'weights': 'uniform'}"
+kNN k=3 uniform,0.16754149775639351,0.04857940395607872,0.7611492221801093,knn,"{'neighbors': 3, 'weights': 'uniform'}"
+kNN k=3 distance,0.1675415847271227,0.048579397736662644,0.7611489326588212,knn,"{'neighbors': 3, 'weights': 'distance'}"
+kNN k=9 distance,0.1687529171684714,0.04545465456940458,0.7576708311664052,knn,"{'neighbors': 9, 'weights': 'distance'}"
+kNN k=9 uniform,0.1688098547553071,0.04544401052622411,0.7575023056311161,knn,"{'neighbors': 9, 'weights': 'uniform'}"
+Polynomial degree 3,0.18853212127904215,0.17835579344702207,0.5510586495146805,polynomial,{'degree': 3}
+Polynomial degree 1,0.21357700160467047,0.03321181242122033,0.609716069618564,polynomial,{'degree': 1}
+Time-constrained polynomial degree 1,0.8760667227558127,0.04300238199269888,-5.779394806947545,rate_polynomial,{'degree': 1}
+Time-constrained polynomial degree 2,0.8827848315361269,0.045346802315625906,-5.865422786353767,rate_polynomial,{'degree': 2}
