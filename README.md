@@ -10,7 +10,7 @@ This project develops and evaluates machine-learning regression models to identi
 - **Optimized** harvest time and starting conditions using a space-time profit objective.
 - **Visualized** model accuracy, production trajectories, operating economics, and stage-specific prediction errors.
 
----
+
 ## Environment
 
 The project uses the following libraries:
@@ -21,7 +21,7 @@ The project uses the following libraries:
 - pandas: 2.0.0
 - scikit-learn: 1.4.0
 
----
+
 ## Code Design
 
 ### Program Organization
@@ -53,7 +53,6 @@ After test evaluation, the selected model is refitted using all 30 available bat
 The program exports the selected experiments, train/test allocations, a model comparison table, held-out predictions, test-performance statistics, stage-level errors, and recommended operating conditions. Figures show the validation RMSE comparison, measured versus predicted test trajectories, stage-specific RMSE, and predicted profit over harvest time at the recommended starting conditions. The fixed batch IDs, repeatable train/test split, tested model configurations, and organized folders make results reproducible. Only the final recommended conditions are exported, rather than the full optimization grid.
 
 
-___
 ## Analysis
 
 ### Experimental Design: Selecting 30 Representative Batches
@@ -69,7 +68,7 @@ Direct regression was chosen because the operational decision involves four quan
 
 Polynomial regression provides a particularly useful balance between interpretability and nonlinearity. The general degree-two relationship is shown below; the symbols represent standardized starting conditions and harvest time.
 
-![img_2.png](IGNORE (Equations in README)/img_2.png)
+![img_2.png](ignore.equations/img_2.png)
 
 A degree-two polynomial includes the four standardized input terms, their squares, and pairwise interactions, allowing the effect of one input to depend on another. `PolynomialFeatures(degree=2, include_bias=False)` creates these terms, and `LinearRegression` estimates their coefficients. The intercept is provided by the regressor rather than being duplicated in the feature transformer. Degree-one and degree-three models establish whether a simpler or more flexible functional form is preferable. k-nearest-neighbours regression provides an alternative without a global polynomial equation. The neighbour counts 3, 5, and 9 test the trade-off between following local patterns and smoothing over neighbouring samples. Uniform and inverse-distance weighting test whether closer observations deserve more influence. All comparisons use the same five-fold batch-grouped validation design.
 
@@ -95,23 +94,23 @@ Stage-specific errors highlight this limitation: held-out RMSE was **0.1644 mg/L
 
 The regression predicts mAb concentration using the three starting conditions and the selected harvest time. The economic calculations also consider how much it costs to prepare the culture. Higher starting glucose, glutamine, and VCD increase the specified cost, so the model must consider both mAb production and the expense of achieving it. The cost is calculated using the following equation:
 
-![img_4.png](IGNORE (Equations in README)/img_4.png)
+![img_4.png](ignore.equations/img_4.png)
 
 Here, initial glucose and glutamine are measured in mM and initial VCD is measured in cells/mL. Cell culture cost is reported in $/L. The predicted mAb concentration is converted into a monetary value using the following equation:
 
-![img_5.png](IGNORE (Equations in README)/img_5.png)
+![img_5.png](ignore.equations/img_5.png)
 
 The value minus the initial culture cost gives the profit per liter:
 
-![img_6.png](IGNORE (Equations in README)/img_6.png)
+![img_6.png](ignore.equations/img_6.png)
 
 To compare harvest times fairly, the total profit is divided by the time needed to complete one batch, including the required one day of downtime between batches:
 
-![img_7.png](IGNORE (Equations in README)/img_7.png)
+![img_7.png](ignore.equations/img_7.png)
 
 The amount of mAb produced per liter per day is calculated separately as space-time yield:
 
-![img_8.png](IGNORE (Equations in README)/img_8.png)
+![img_8.png](ignore.equations/img_8.png)
 
 The added day in the last two equations represents the turnaround between batches. These equations show why maximizing antibody concentration alone is not a strong approach. Raising initial glucose, glutamine, or VCD always increases the specified direct culture cost, but whether that increase improves mAb production depends on the fitted response surface. It becomes economically worthwhile only if the additional predicted product value compensates for the additional cost and cycle duration. A condition could therefore deliver high mAb space-time yield while providing lower profit because its initial materials are expensive. Conversely, a lower yield run could be preferred if it requires substantially less input material. The degree-two model can learn interactions between the inputs, meaning the predicted effect of one starting condition may depend on the others. However, the exported figures do not directly show how much each individual input contributes to profit, so we should not claim that a particular nutrient caused the observed trends without further analysis. Such interpretations would require further response-surface analyses or controlled experimental comparisons.
 
